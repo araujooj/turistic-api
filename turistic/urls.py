@@ -8,6 +8,11 @@ from atractions.api.viewsets import AttractionsViewSet
 from address.api.viewset import AddressViewSet
 from comments.api.viewset import CommentViewSet
 from reviews.api.viewset import ReviewViewSet
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 router = routers.DefaultRouter()
 
@@ -21,4 +26,6 @@ router.register(r'reviews', ReviewViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('sessions', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('refresh-token', TokenRefreshView.as_view(), name='token_refresh')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
